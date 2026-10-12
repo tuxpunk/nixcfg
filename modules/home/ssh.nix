@@ -1,4 +1,4 @@
-_: {
+{lib, ...}: {
   programs.ssh = {
     enable = true;
 
