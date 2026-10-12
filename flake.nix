@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     disko = {
       url = "github:nix-community/disko";
@@ -20,11 +21,17 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, disko, home-manager, nix-darwin, ... }: {
+  outputs = inputs @ {
+    nixpkgs,
+    disko,
+    home-manager,
+    nix-darwin,
+    ...
+  }: {
     nixosConfigurations.rstlss-lab-pc = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
-      specialArgs = { inherit inputs; };
+      specialArgs = {inherit inputs;};
 
       modules = [
         disko.nixosModules.disko
@@ -37,7 +44,7 @@
     darwinConfigurations.rstlss-macbook = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
 
-      specialArgs = { inherit inputs; };
+      specialArgs = {inherit inputs;};
 
       modules = [
         home-manager.darwinModules.home-manager
