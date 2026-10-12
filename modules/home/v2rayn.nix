@@ -1,4 +1,9 @@
-{pkgs, ...}: let
+{
+  inputs,
+  pkgs,
+  ...
+}: let
+  v2rayn = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.v2rayn;
   iranRules = rev: {
     geoip = pkgs.fetchurl {
       url = "https://github.com/Chocolate4U/Iran-v2ray-rules/releases/download/${rev}/geoip.dat";
@@ -12,7 +17,7 @@
   rules = iranRules "202609110905";
 in {
   home.packages = [
-    pkgs.v2rayn
+    v2rayn
   ];
 
   xdg.dataFile = {
