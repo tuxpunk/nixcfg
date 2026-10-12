@@ -1,10 +1,12 @@
 {
+  inputs,
   pkgs,
   lib,
   ...
 }: {
   nixpkgs.config.allowUnfree = true;
   home-manager = {
+    extraSpecialArgs = {inherit inputs;};
     useGlobalPkgs = true;
     useUserPackages = true;
     users.rstlss = {
