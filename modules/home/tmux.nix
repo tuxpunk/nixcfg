@@ -77,13 +77,13 @@
       session = [
         {
           name = "sf";
-          path = "~/git/rst-lss/sf";
+          path = "~/git/tuxpunk/sf";
           startup_command = "tmux rename-window editor && nvim .";
           windows = ["agent" "git" "checks" "repl" "notebook" "scratch"];
         }
         {
           name = "nixcfg";
-          path = "~/git/rst-lss/nixcfg";
+          path = "~/git/tuxpunk/nixcfg";
           startup_command = "tmux rename-window editor && nvim .";
           windows = ["agent" "git" "scratch"];
         }
