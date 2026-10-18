@@ -4,8 +4,8 @@ _: {
 
     settings = {
       user = {
-        name = "RSTLSS";
-        email = "72990855+rst-lss@users.noreply.github.com";
+        name = "tuxpunk";
+        email = "72990855+tuxpunk@users.noreply.github.com";
       };
 
       init.defaultBranch = "main";
