@@ -38,6 +38,14 @@
         IdentityFile = "~/.ssh/id_ed25519_homelab";
         IdentitiesOnly = true;
       };
+
+      "git.lab.homelab-test.ir" = {
+        HostName = "git.lab.homelab-test.ir";
+        Port = 2222;
+        User = "git";
+        IdentityFile = "~/.ssh/id_ed25519_gitea";
+        IdentitiesOnly = true;
+      };
     };
   };
 }
