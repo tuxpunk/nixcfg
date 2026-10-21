@@ -11,8 +11,50 @@
       *Poweroff*) systemctl poweroff ;;
     esac
   '';
+
+  screenshot = pkgs.writeShellApplication {
+    name = "screenshot";
+    runtimeInputs = with pkgs; [grim slurp wl-clipboard libnotify];
+    text = ''
+      dir="$HOME/pix/tmp"
+      mkdir -p "$dir"
+      file="$dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+
+      case "''${1:-region}" in
+        region)
+          geom=$(slurp) || exit 0
+          grim -g "$geom" - | tee "$file" | wl-copy --type image/png
+          ;;
+        full)
+          grim - | tee "$file" | wl-copy --type image/png
+          ;;
+      esac
+
+      notify-send "Screenshot" "$file"
+    '';
+  };
+
+  screenrec = pkgs.writeShellApplication {
+    name = "screenrec";
+    runtimeInputs = with pkgs; [wf-recorder slurp libnotify procps];
+    text = ''
+      if pgrep -x wf-recorder >/dev/null; then
+        pkill -INT -x wf-recorder
+        notify-send "Recording" "stopped"
+        exit 0
+      fi
+
+      dir="$HOME/pix/tmp"
+      mkdir -p "$dir"
+      file="$dir/$(date +%Y-%m-%d_%H-%M-%S).mp4"
+
+      geom=$(slurp) || exit 0
+      notify-send "Recording" "started"
+      wf-recorder -g "$geom" -f "$file"
+    '';
+  };
 in {
-  home.packages = [powermenu];
+  home.packages = [powermenu screenshot screenrec];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -118,6 +160,11 @@ in {
 
         "$mod SHIFT, Escape, exec, $powermenu"
         "$mod, B, exec, blueman-manager"
+
+        "$mod, P, exec, screenshot region"
+        "$mod SHIFT, P, exec, screenshot full"
+        ", Print, exec, screenshot region"
+        "$mod, R, exec, screenrec"
       ];
 
       windowrule = [
