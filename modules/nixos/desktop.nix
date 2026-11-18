@@ -25,9 +25,18 @@
 
   programs.dconf.enable = true;
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [xdg-desktop-portal-gtk];
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [xdg-desktop-portal-gtk];
+    };
+
+    mime = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = ["sioyek.desktop"];
+      };
+    };
   };
 
   security.rtkit.enable = true;
